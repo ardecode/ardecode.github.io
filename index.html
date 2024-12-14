@@ -3,122 +3,712 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Personal Website</title>
+    <title>Arijit Desai - Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --gray: #666666;
+            --accent: #2a2a2a;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            color: #333;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+            line-height: 1.6;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* Navigation */
         nav {
-            background: #2c3e50;
-            padding: 1rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        nav a {
-            color: white;
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--black);
             text-decoration: none;
-            margin-right: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .nav-links a {
+            color: var(--black);
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            background: var(--white);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./IMG_0429.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            /* opacity: 0.85; */
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 3rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            color: var(--white);
+            border-bottom: 4px solid var(--white);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--white);
+            z-index: 2;
+            padding: 1rem;
+            border-radius: 50%;
+        }
+
+        .scroll-indicator .arrow {
+            width: 20px;
+            height: 20px;
+            border-right: 2px solid var(--white);
+            border-bottom: 2px solid var(--white);
+            transform: rotate(45deg);
+        }
+
+        .scroll-indicator .text {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            color: var(--white);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
         }
 
-        .hero {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: #f8f9fa;
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
         }
 
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 1rem;
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--black);
         }
 
-        .section {
-            margin: 3rem 0;
-        }
-
-        .project-grid {
+        /* About Section */
+        .about-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
-            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--gray-light);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .project-card {
-            border: 1px solid #ddd;
-            padding: 1rem;
-            border-radius: 8px;
+            position: relative;
+            padding: 2.5rem;
+            background: var(--white);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
-        footer {
-            text-align: center;
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--black);
+            transition: height 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card:hover::before {
+            height: 100%;
+        }
+
+        .project-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        /* Travel Section */
+        .travel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            padding: 0.5rem;
+        }
+
+        .travel-card {
+            position: relative;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .travel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .travel-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .travel-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .travel-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
             padding: 2rem;
-            background: #f8f9fa;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.9) 0%,
+                rgba(0, 0, 0, 0.7) 60%,
+                rgba(0, 0, 0, 0) 100%
+            );
+            color: var(--white);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .travel-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .travel-info p {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Optional: Add this if you want a subtle slide-up effect on hover */
+        .travel-card:hover .travel-info {
+            transform: translateY(-5px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .travel-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .travel-card {
+                height: 350px;
+            }
+        }
+
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .proficiency-card {
+            background: var(--gray-light);
+            padding: 1.5rem;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .proficiency-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .proficiency-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--black);
+        }
+
+        .proficiency-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--white);
+            color: var(--black);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 2px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
             margin-top: 3rem;
+        }
+
+        .contact-card {
+            position: relative;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+
+        .contact-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .contact-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .contact-card a {
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+        }
+
+        .contact-card a:hover {
+            background: var(--gray-light);
+            color: var(--accent);
+            opacity: 1;
+        }
+
+        /* Update your HTML to include icons */
+        .contact-card .contact-icon {
+            display: block;
+            margin-bottom: 1rem;
+        }
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-5px) translateX(-50%);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            section {
+                padding: 4rem 1rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <div class="nav-content">
+            <a href="#" class="logo">Arijit Desai</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#travel">Travel</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
     </nav>
 
-    <section id="home" class="hero">
-        <img src="/api/placeholder/150/150" alt="Your Profile Picture" class="profile-img">
-        <h1>Arijit Desai</h1>
-        <p>Web Developer | Designer | Creative Thinker</p>
+    <section class="hero">
+        <a href="#about" class="scroll-indicator">
+            <div class="arrow"></div>
+            <span class="text">Scroll</span>
+        </a>
     </section>
 
-    <div class="container">
-        <section id="about" class="section">
-            <h2>About Me</h2>
-            <p>Hello! I'm a passionate developer with expertise in web technologies. I love creating beautiful and functional websites that solve real-world problems.</p>
-            <p>My skills include HTML, CSS, JavaScript, and various modern frameworks. I'm always eager to learn new technologies and take on challenging projects.</p>
-        </section>
-
-        <section id="projects" class="section">
-            <h2>Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>Project 1</h3>
-                    <p>A brief description of your first project and what technologies you used.</p>
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Currently serving as a <strong>Member of Technical Staff-3</strong> at <strong>Nutanix</strong> in the Performance Engineering organization, I specialize in building automated performance testing tools and maintaining test hygiene (yes, keeping those tests squeaky clean! 🧹). As a <strong>Performance Engineer</strong> my work involves creating robust testing frameworks that ensure consistent and accurate performance metrics while reducing manual intervention (because who likes doing things manually, right? 🤖).</p>
+                    <br>
+                    <p>Passionate about <strong>Deep Learning</strong> (the deeper, the better! 🧠), I actively work on personal projects to deepen my understanding of the field and lead a paper reading club at my workplace, fostering knowledge sharing and technical discussions among colleagues. Think of it as a book club, but with more algorithms and fewer romance novels!</p>
+                    <br>
+                    <p>Outside of technology, I'm an <strong>avid traveler</strong> (always plotting my next adventure! 🌍) and <strong>sports enthusiast</strong>. Drawing inspiration from legends like <em>Rafael Nadal</em> in tennis and <em>Sachin Tendulkar</em> in cricket (yes, I'm a fan of the GOATs! 🐐), I bring the same dedication and competitive spirit to both my athletic pursuits and professional work. This well-rounded approach helps me maintain creativity and fresh perspectives in problem-solving. After all, some of my best code ideas have come while chasing a tennis ball! 🎾</p>
                 </div>
-                <div class="project-card">
-                    <h3>Project 2</h3>
-                    <p>Description of another project highlighting your skills and achievements.</p>
-                </div>
-                <div class="project-card">
-                    <h3>Project 3</h3>
-                    <p>Details about a third project showcasing different aspects of your work.</p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">4+ ⚡</div>
+                        <div>Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">14 🏞️</div>
+                        <div>National Parks Visited</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100+ ☕</div>
+                        <div>Coffee Cups</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3 🌏</div>
+                        <div>Countries Visited</div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contact" class="section">
-            <h2>Contact</h2>
-            <p>Feel free to reach out to me at: your.email@example.com</p>
-            <p>Find me on:
-                <a href="https://github.com/yourusername">GitHub</a> |
-                <a href="https://linkedin.com/in/yourprofile">LinkedIn</a>
-            </p>
-        </section>
-    </div>
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <div class="skills-container">
+                <div class="proficiency-card">
+                    <h3 class="proficiency-title">AI & Machine Learning</h3>
+                    <div class="proficiency-skills">
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">NLTK</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Matplotlib</span>
+                        <span class="skill-tag">Jupyter</span>
+                        <span class="skill-tag">SciPy</span>
+                        <span class="skill-tag">Hugging Face</span>
+                    </div>
+                </div>
 
-    <footer>
-        <p>&copy; 2024 Your Name. All rights reserved.</p>
-    </footer>
+                <div class="proficiency-card">
+                    <h3 class="proficiency-title">BackEnd</h3>
+                    <div class="proficiency-skills">
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">Django Rest Framework</span>
+                    </div>
+                </div>
+
+                <div class="proficiency-card">
+                    <h3 class="proficiency-title">Observability and Monitoring</h3>
+                    <div class="proficiency-skills">
+                        <span class="skill-tag">OpenTelemetry</span>
+                        <span class="skill-tag">Prometheus</span>
+                        <span class="skill-tag">Grafana</span>
+                        <span class="skill-tag">Loki</span>
+                    </div>
+                </div>
+    
+                <div class="proficiency-card">
+                    <h3 class="proficiency-title">CI/CD</h3>
+                    <div class="proficiency-skills">
+                        <span class="skill-tag">Gitlab</span>
+                    </div>
+                </div>
+    
+                <div class="proficiency-card">
+                    <h3 class="proficiency-title">DevOps</h3>
+                    <div class="proficiency-skills">
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Docker</span>
+                    </div>
+                </div>
+    
+                <div class="proficiency-card">
+                    <h3 class="proficiency-title">Databases</h3>
+                    <div class="proficiency-skills">
+                        <span class="skill-tag">PostgreSQL</span>
+                    </div>
+                </div>
+    
+                <div class="proficiency-card">
+                    <h3 class="proficiency-title">Misc</h3>
+                    <div class="proficiency-skills">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Agile/Scrum</span>
+                    </div>
+                </div>
+    
+                <div class="proficiency-card">
+                    <h3 class="proficiency-title">Languages</h3>
+                    <div class="proficiency-skills">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="project-card">
+                    <h3>🎙️ The India Brief</h3>
+                    <p>An AI-powered podcast that transforms daily Indian news into engaging audio content. Using cutting-edge text-to-speech and natural language processing to deliver news in a conversational format, making complex news digestible and entertaining.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🤖 Sanchaari - AI Assistant</h3>
+                    <p>A versatile AI agent capable of multiple functions including calculations, Wikipedia searches, worldwide time checks, stock price monitoring, word definitions, news updates, and language translation. Built with modern AI technologies to provide seamless user assistance.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🚗 Safar - Ride Sharing Platform</h3>
+                    <p>Developed a comprehensive ride-sharing application that connects drivers with passengers. Features include in-app chat communication, and an intelligent matching algorithm for optimal rider-driver pairing.</p>
+                </div>
+                <div class="project-card" style="display: flex; align-items: center; justify-content: center; background: transparent; box-shadow: none;">
+                    <a href="/projects" style="display: inline-flex; align-items: center; text-decoration: none; color: var(--accent); font-weight: 500; padding: 1.5rem 2.5rem; border: 2px solid var(--accent); border-radius: 4px; transition: all 0.3s ease; font-size: 1.1rem;">
+                        View All Projects
+                        <span style="margin-left: 8px; transition: transform 0.3s ease;">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="travel">
+        <div class="container">
+            <h2 class="section-title">Travel Adventures</h2>
+            <div class="travel-grid">
+                <div class="travel-card">
+                    <img src="/api/placeholder/600/400" alt="Shenandoah National Park">
+                    <div class="travel-info">
+                        <h3>🌲 Shenandoah National Park</h3>
+                        <p>105 miles of scenic Skyline Drive through Virginia's Blue Ridge Mountains. Witnessed stunning fall colors and encountered black bears!</p>
+                    </div>
+                </div>
+                <div class="travel-card">
+                    <img src="/api/placeholder/600/400" alt="Yellowstone and Grand Teton">
+                    <div class="travel-info">
+                        <h3>🌋 Yellowstone & Grand Teton</h3>
+                        <p>From Old Faithful's eruptions to Teton's jagged peaks. Two weeks of geothermal wonders and pristine wilderness.</p>
+                    </div>
+                </div>
+                <div class="travel-card">
+                    <img src="/api/placeholder/600/400" alt="Alaska">
+                    <div class="travel-info">
+                        <h3>❄️ Alaska</h3>
+                        <p>The Last Frontier: Ventured above the Arctic Circle, witnessed the mesmerizing Northern Lights dance across the sky, and explored pristine glaciers in the Alaskan wilderness.</p>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <span class="contact-icon">📧</span>
+                    <h3>Email</h3>
+                    <a href="mailto:arijit.desai@example.com">desaiarijit@gmail.com</a>
+                </div>
+                <div class="contact-card">
+                    <span class="contact-icon">💻</span>
+                    <h3>GitHub</h3>
+                    <a href="https://github.com/ardecode" target="_blank">@ardecode</a>
+                </div>
+                <div class="contact-card">
+                    <span class="contact-icon">🔗</span>
+                    <h3>LinkedIn</h3>
+                    <a href="https://linkedin.com/in/arijitdesai" target="_blank">Arijit Desai</a>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
