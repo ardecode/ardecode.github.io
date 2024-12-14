@@ -86,7 +86,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('./IMG_0429.jpg'); /* Replace with your image path */
+            background-image: url('/Users/arijit.desai/Desktop/IMG_0429.jpg'); /* Replace with your image path */
             background-size: cover;
             background-position: center;
             /* opacity: 0.85; */
@@ -337,27 +337,34 @@
         /* Skills */
         .skills-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 0.25rem;
         }
 
         .proficiency-card {
-            background: var(--gray-light);
-            padding: 1.5rem;
-            border-radius: 4px;
-            transition: transform 0.3s ease;
+            background: var(--white);
+            padding: 1.25rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .proficiency-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .proficiency-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--black);
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .proficiency-skills {
@@ -367,20 +374,19 @@
         }
 
         .skill-tag {
-            background: var(--white);
+            background: var(--gray-light);
             color: var(--black);
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            border-radius: 2px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            border-radius: 4px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
 
         .skill-tag:hover {
-            background: var(--black);
+            background: var(--accent);
             color: var(--white);
         }
-
         /* Contact Section */
         .contact-grid {
             display: grid;
@@ -664,21 +670,21 @@
             <h2 class="section-title">Travel Adventures</h2>
             <div class="travel-grid">
                 <div class="travel-card">
-                    <img src="/api/placeholder/600/400" alt="Shenandoah National Park">
+                    <img src="./IMG_2885.JPG" alt="Shenandoah National Park">
                     <div class="travel-info">
                         <h3>🌲 Shenandoah National Park</h3>
                         <p>105 miles of scenic Skyline Drive through Virginia's Blue Ridge Mountains. Witnessed stunning fall colors and encountered black bears!</p>
                     </div>
                 </div>
                 <div class="travel-card">
-                    <img src="/api/placeholder/600/400" alt="Yellowstone and Grand Teton">
+                    <img src="./IMG_1231.JPG" alt="Yellowstone and Grand Teton">
                     <div class="travel-info">
                         <h3>🌋 Yellowstone & Grand Teton</h3>
-                        <p>From Old Faithful's eruptions to Teton's jagged peaks. Two weeks of geothermal wonders and pristine wilderness.</p>
+                        <p>From Old Faithful's eruptions to Teton's jagged peaks. 5 days of geothermal wonders and pristine wilderness.</p>
                     </div>
                 </div>
                 <div class="travel-card">
-                    <img src="/api/placeholder/600/400" alt="Alaska">
+                    <img src="./IMG_8004.JPG" alt="Alaska">
                     <div class="travel-info">
                         <h3>❄️ Alaska</h3>
                         <p>The Last Frontier: Ventured above the Arctic Circle, witnessed the mesmerizing Northern Lights dance across the sky, and explored pristine glaciers in the Alaskan wilderness.</p>
