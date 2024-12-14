@@ -49,7 +49,7 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: bold;
             color: var(--black);
             text-decoration: none;
@@ -390,33 +390,25 @@
         /* Contact Section */
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .contact-card {
             position: relative;
-            padding: 3rem 2.5rem;
+            padding: 2.5rem;
             text-align: center;
             background: var(--white);
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             transition: all 0.3s ease;
-            overflow: hidden;
-        }
-
-        .contact-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--accent);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
         }
 
         .contact-card:hover {
@@ -425,43 +417,26 @@
             border-color: transparent;
         }
 
-        .contact-card:hover::before {
-            transform: scaleX(1);
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
         }
 
         .contact-card h3 {
             font-size: 1.25rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             color: var(--accent);
         }
 
-        .contact-icon {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-        }
-
-        .contact-card a {
-            color: var(--black);
-            text-decoration: none;
+        .contact-text {
             font-weight: 500;
+            color: var(--black);
             font-size: 1.1rem;
-            transition: all 0.3s ease;
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
         }
 
-        .contact-card a:hover {
-            background: var(--gray-light);
+        .contact-card:hover .contact-text {
             color: var(--accent);
-            opacity: 1;
-        }
-
-        /* Update your HTML to include icons */
-        .contact-card .contact-icon {
-            display: block;
-            margin-bottom: 1rem;
         }
         /* Animations */
         @keyframes fadeInUp {
@@ -513,9 +488,9 @@
             <a href="#" class="logo">Arijit Desai</a>
             <div class="nav-links">
                 <a href="#about">About</a>
+                <a href="#skills">Skills</a>
                 <a href="#projects">Projects</a>
                 <a href="#travel">Travel</a>
-                <a href="#skills">Skills</a>
                 <a href="#contact">Contact</a>
             </div>
         </div>
@@ -698,21 +673,37 @@
         <div class="container">
             <h2 class="section-title">Get in Touch</h2>
             <div class="contact-grid">
-                <div class="contact-card">
-                    <span class="contact-icon">📧</span>
-                    <h3>Email</h3>
-                    <a href="mailto:arijit.desai@example.com">desaiarijit@gmail.com</a>
-                </div>
-                <div class="contact-card">
-                    <span class="contact-icon">💻</span>
-                    <h3>GitHub</h3>
-                    <a href="https://github.com/ardecode" target="_blank">@ardecode</a>
-                </div>
-                <div class="contact-card">
-                    <span class="contact-icon">🔗</span>
-                    <h3>LinkedIn</h3>
-                    <a href="https://linkedin.com/in/arijitdesai" target="_blank">Arijit Desai</a>
-                </div>
+                <a href="mailto:desaiarijit@gmail.com" class="contact-card-link">
+                    <div class="contact-card">
+                        <span class="contact-icon">📧</span>
+                        <h3>Email</h3>
+                        <span class="contact-text">desaiarijit@gmail.com</span>
+                    </div>
+                </a>
+                
+                <a href="https://github.com/ardecode" target="_blank" class="contact-card-link">
+                    <div class="contact-card">
+                        <span class="contact-icon">💻</span>
+                        <h3>GitHub</h3>
+                        <span class="contact-text">@ardecode</span>
+                    </div>
+                </a>
+                
+                <a href="https://linkedin.com/in/arijitdesai" target="_blank" class="contact-card-link">
+                    <div class="contact-card">
+                        <span class="contact-icon">🔗</span>
+                        <h3>LinkedIn</h3>
+                        <span class="contact-text">Arijit Desai</span>
+                    </div>
+                </a>
+    
+                <a href="https://twitter.com/ardecode" target="_blank" class="contact-card-link">
+                    <div class="contact-card">
+                        <span class="contact-icon">✖️</span>
+                        <h3>X</h3>
+                        <span class="contact-text">@ardecode</span>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
