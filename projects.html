@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arijit Desai - Projects</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --gray: #666666;
+            --accent: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+            line-height: 1.6;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--black);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .nav-links a {
+            color: var(--black);
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.6;
+        }
+
+        /* Header Section */
+        .header {
+            margin-top: 100px;
+            padding: 4rem 2rem;
+            background: var(--gray-light);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Projects Section */
+        .projects-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--accent);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            background: var(--gray-light);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .project-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-features {
+            list-style-type: none;
+        }
+
+        .project-features li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .project-features li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .project-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .project-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Arijit Desai</a>
+            <div class="nav-links">
+                <a href="index.html#about">About</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#travel">Travel</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="header">
+        <h1>My Projects</h1>
+        <p>A collection of my work in AI, web development, and software engineering</p>
+    </header>
+
+    <main class="projects-container">
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <h2 class="project-title">🎙️ The India Brief</h2>
+                </div>
+                <div class="project-links">
+                    <a href="https://open.spotify.com/show/1fQMe3YRzi6n8L8DQoiY0T?si=03f25394e60a4f45" class="project-link">Spotify</a>
+                </div>
+            </div>
+            <div class="project-tags">
+                <span class="project-tag">Python</span>
+                <span class="project-tag">NotebookLM</span>
+                <span class="project-tag">Web Scraping</span>
+                <span class="project-tag">NLP</span>
+                <span class="project-tag">Spotify API</span>
+            </div>
+            <p class="project-description">An automated daily podcast that curates and narrates top Indian news stories across Politics, Business, Tech, and Sports. The system intelligently scrapes news sources, ranks articles by importance, and uses NotebookLM to transform them into engaging conversational content for Spotify.</p>
+            <ul class="project-features">
+                <li>Automated web scraping engine for multiple Indian news outlets</li>
+                <li>Smart article categorization and scoring system to identify top stories</li>
+                <li>NotebookLM integration for converting news into natural conversational format</li>
+                <li>Automated podcast generation and Spotify publishing pipeline</li>
+            </ul>
+        </div>
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <h2 class="project-title">🤖 Sanchaari - Transparent AI Assistant</h2>
+                </div>
+                <div class="project-links">
+                    <a href="https://huggingface.co/spaces/arde0909/sanchaari" class="project-link">Live Demo</a>
+                    <a href="https://github.com/ardecode/sanchaari" class="project-link">GitHub</a>
+                </div>
+            </div>
+            <div class="project-tags">
+                <span class="project-tag">Python</span>
+                <span class="project-tag">LangChain</span>
+                <span class="project-tag">LLM</span>
+            </div>
+            <p class="project-description">A transparent AI assistant that not only performs tasks but also reveals its thought process in real-time. Sanchaari provides insights into how the LLM reasons through each request while handling various tasks from calculations to translation, making AI decision-making more understandable and trustworthy.</p>
+            <ul class="project-features">
+                <li>Visible thought process: Shows step-by-step LLM reasoning for each task</li>
+                <li>Multi-functional capabilities: Handles calculations, Wikipedia searches, worldwide time checks, stock prices (via Alpha Vantage), word definitions, news updates, and translations</li>
+                <li>Real-time API integrations: Seamlessly connects with Wikipedia, financial data, and news services</li>
+                <li>Transparent architecture: Demonstrates how LLMs process and reason about different types of queries</li>
+            </ul>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <h2 class="project-title">🚗 Safar - Ride Sharing Platform</h2>
+                </div>
+                <div class="project-links">
+                    <a href="https://www.safarsaathi.com/" class="project-link">Live Demo</a>
+                </div>
+            </div>
+            <div class="project-tags">
+                <span class="project-tag">NextJS</span>
+                <span class="project-tag">PostgreSQL</span>
+                <span class="project-tag">Vercel</span>
+            </div>
+            <p class="project-description">A comprehensive ride-sharing application that connects drivers with passengers. Features include in-app chat communication, and an intelligent matching algorithm for optimal rider-driver pairing.</p>
+            <ul class="project-features">
+                <li>Real-time location tracking and mapping</li>
+                <li>In-app messaging system</li>
+                <li>Intelligent ride matching algorithm</li>
+                <li>Rating and review system</li>
+            </ul>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <h2 class="project-title">📈 StockAverager - Portfolio Calculator</h2>
+                </div>
+                <div class="project-links">
+                    <a href="https://stock-avg-calculator.vercel.app/" class="project-link">Live Demo</a>
+                    <a href="https://github.com/ardecode/stock_avg_calculator" class="project-link">GitHub</a>
+                </div>
+            </div>
+            <div class="project-tags">
+                <span class="project-tag">Next.js</span>
+                <span class="project-tag">Yahoo Finance API</span>
+                <span class="project-tag">Vercel</span>
+                <span class="project-tag">React</span>
+                <span class="project-tag">Tailwind CSS</span>
+            </div>
+            <p class="project-description">A real-time portfolio analysis tool that helps investors calculate future average holding prices and potential profit/loss scenarios. Users can simulate different buying strategies by adjusting share quantities and price variations to make informed investment decisions.</p>
+            <ul class="project-features">
+                <li>Real-time stock data integration using Yahoo Finance API</li>
+                <li>Dynamic average price calculator based on existing holdings and potential purchases</li>
+                <li>Interactive profit/loss scenario simulator with percentage-based calculations</li>
+                <li>Deployed on Vercel for reliable and fast performance</li>
+            </ul>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <h2 class="project-title">📊 AP Elections 2024 Analytics Dashboard</h2>
+                </div>
+                <div class="project-links">
+                    <a href="https://antarjaalasanchaari.grafana.net/public-dashboards/13236b744de24f61b0241238bc2364d2" class="project-link">Live Demo</a>
+                    <a href="https://github.com/ardecode/Andhra-Pradesh-2024-Assembly-Elections" class="project-link">GitHub</a>
+                </div>
+            </div>
+            <div class="project-tags">
+                <span class="project-tag">Grafana</span>
+                <span class="project-tag">PostgreSQL</span>
+                <span class="project-tag">SQL</span>
+                <span class="project-tag">Data Visualization</span>
+                <span class="project-tag">Election Analysis</span>
+            </div>
+            <p class="project-description">A detailed analytics dashboard visualizing the 2024 Andhra Pradesh Assembly Elections. Built with Grafana and PostgreSQL, it provides comprehensive insights into voting patterns, candidate profiles, and constituency-wise analysis across all districts of Andhra Pradesh.</p>
+            <ul class="project-features">
+                <li>Voting analysis: Compare EVM vs postal ballot distributions across all 175 assembly constituencies, with party-wise and region-wise breakdowns</li>
+                <li>Constituency insights: Visualization of closest contests with top 10 margin analysis, seat distribution across different regions of AP, and party performance metrics</li>
+                <li>Candidate profiling: Detailed analysis of AP's candidates including criminal records, assets declaration (crorepati candidates), educational qualifications, and gender representation by party</li>
+                <li>Interactive Grafana dashboards with dynamic filters for district-wise and constituency-wise analysis</li>
+            </ul>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <div>
+                    <h2 class="project-title">🤓 Nutanix Bible Chatbot</h2>
+                </div>
+                <div class="project-links">
+                    <a href="https://huggingface.co/spaces/arde0909/nutanix_bible_chatbot" class="project-link">Live Demo</a>
+                    <a href="https://github.com/ardecode/Nutanix-Bible-Chatbot" class="project-link">GitHub</a>
+                </div>
+            </div>
+            <div class="project-tags">
+                <span class="project-tag">Claude 3.5 Sonnet</span>
+                <span class="project-tag">RAG</span>
+                <span class="project-tag">Hugging Face</span>
+                <span class="project-tag">LangChain</span>
+                <span class="project-tag">Vector DB</span>
+            </div>
+            <p class="project-description">An intelligent chatbot powered by Claude 3.5 Sonnet and Retrieval-Augmented Generation (RAG) that provides accurate, context-aware answers about Nutanix technology. Hosted on Hugging Face Spaces, it combines LLM capabilities with precise information retrieval to deliver reliable technical responses.</p>
+            <ul class="project-features">
+                <li>RAG implementation: Efficiently retrieves and synthesizes information from the Nutanix knowledge base</li>
+                <li>Claude 3.5 Sonnet integration: Leverages advanced LLM capabilities for natural and accurate responses</li>
+                <li>Vector database for semantic search and efficient information retrieval</li>
+                <li>Deployed on Hugging Face Spaces for easy accessibility and sharing</li>
+            </ul>
+        </div>
+
+    </main>
+</body>
+</html>
