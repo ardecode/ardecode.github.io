@@ -480,6 +480,333 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Modal Styles */
+        .travel-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .travel-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .travel-modal {
+            background: var(--white);
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .travel-modal-overlay.active .travel-modal {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .travel-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .travel-modal-close:hover {
+            background: white;
+        }
+
+        .travel-modal-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .travel-modal-header {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .travel-modal-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .travel-modal-header-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+            color: white;
+        }
+
+        .travel-modal-header-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .travel-modal-header-content .trip-date {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .travel-modal-body {
+            padding: 2rem;
+        }
+
+        .travel-itinerary {
+            margin-bottom: 3rem;
+        }
+
+        .travel-itinerary h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .day-item {
+            margin-bottom: 2rem;
+        }
+
+        .day-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .day-item h4 span {
+            background: var(--black);
+            color: var(--white);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            margin-right: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .day-item p {
+            line-height: 1.7;
+            color: var(--gray);
+        }
+
+        .travel-photos {
+            margin-bottom: 2rem;
+        }
+
+        .travel-photos h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .photo-item {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 180px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 0.9rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover .photo-caption {
+            transform: translateY(0);
+        }
+
+        .travel-tips {
+            margin-bottom: 2rem;
+        }
+
+        .travel-tips h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .tips-list {
+            list-style-type: none;
+        }
+
+        .tips-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .tips-list li:before {
+            content: "📌";
+            margin-right: 0.75rem;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .travel-modal-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .travel-modal-content {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* Modal fullsize image viewer */
+        .fullsize-image-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1002;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .fullsize-image-viewer.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fullsize-image {
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .fullsize-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .fullsize-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .image-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            padding: 20px;
+            z-index: 1003;
+        }
+
+        .image-nav-prev {
+            left: 20px;
+        }
+
+        .image-nav-next {
+            right: 20px;
+        }
+
+        /* Make travel cards clickable */
+        .travel-card {
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .travel-modal {
+                width: 95%;
+            }
+            
+            .travel-modal-header {
+                height: 200px;
+            }
+            
+            .travel-modal-header-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .photos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .photo-item {
+                height: 150px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -502,6 +829,278 @@
             <span class="text">Scroll</span>
         </a>
     </section>
+
+    <!-- Travel Modal Template -->
+    <div class="travel-modal-overlay" id="travelModalOverlay">
+        <div class="travel-modal">
+            <div class="travel-modal-close" onclick="closeTravelModal()">×</div>
+            <div class="travel-modal-content">
+                <div class="travel-modal-header">
+                    <img id="modalHeaderImage" src="" alt="Travel destination">
+                    <div class="travel-modal-header-content">
+                        <h2 id="modalTitle"></h2>
+                        <div class="trip-date" id="modalDate"></div>
+                    </div>
+                </div>
+                <div class="travel-modal-body">
+                    <div class="travel-itinerary">
+                        <h3>Itinerary</h3>
+                        <div id="itineraryContent"></div>
+                    </div>
+                    
+                    <div class="travel-photos">
+                        <h3>Photos</h3>
+                        <div class="photos-grid" id="photosGrid"></div>
+                    </div>
+                    
+                    <div class="travel-tips">
+                        <h3>Travel Tips</h3>
+                        <ul class="tips-list" id="tipsList"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullsize Image Viewer -->
+    <div class="fullsize-image-viewer" id="fullsizeViewer">
+        <div class="fullsize-close" onclick="closeFullsizeViewer()">×</div>
+        <div class="image-nav image-nav-prev" onclick="navigateImage(-1)">‹</div>
+        <img id="fullsizeImage" class="fullsize-image" src="" alt="Full size travel photo">
+        <div class="image-nav image-nav-next" onclick="navigateImage(1)">›</div>
+        <div class="fullsize-caption" id="fullsizeCaption"></div>
+    </div>
+
+    <!-- Add JavaScript for Travel Modal Functionality -->
+    <script>
+        // Travel data - This is your template that can be used for all travel cards
+        const travelData = {
+            "japan": {
+                title: "🗾 Japan: Tokyo & Kyoto",
+                date: "April 2023",
+                headerImage: "./IMG_0059.jpg",
+                description: "Explored vibrant Tokyo neighborhoods like Shibuya and Shinjuku, soaked in the serene temples of Kyoto, and took a peaceful day trip to Kamakura. Sushi, ramen, and matcha delights at every turn!",
+                itinerary: [
+                    {
+                        "day": "Day 1-2",
+                        "title": "Tokyo Exploration",
+                        "description": "Arrived at Haneda Airport and explored the vibrant neighborhoods of Shibuya and Shinjuku. Visited Meiji Shrine, Yoyogi Park, and Harajuku's Takeshita Street. Enjoyed panoramic views from Shibuya Sky and Mags Park Rooftop. Explored Tsukiji Outer Market, Ginza shopping district, and the historic areas of Yanaka, Ueno, and Asakusa with its famous Senso-ji Temple."
+                    },
+                    {
+                        "day": "Day 3",
+                        "title": "Day Trip to Kamakura",
+                        "description": "Took a train to the coastal town of Kamakura to visit the Great Buddha (Daibutsu) and numerous temples. Walked the charming Komachi Street and tried local specialties."
+                    },
+                    {
+                        "day": "Day 4-7",
+                        "title": "Kyoto Cultural Immersion",
+                        "description": "I took the Shinkansen bullet train to Kyoto and explored Southern Higashiyama, including Kiyomizu-dera Temple and the atmospheric Gion District with its traditional shops. I attended a cultural show featuring Geisha performances and tea ceremony demonstrations, then visited the breathtaking Arashiyama Bamboo Grove early in the morning to avoid crowds, hiked up to Iwatayama Monkey Park, and admired the famous Kinkaku-ji (Golden Pavilion) and Ryoan-ji Temple's Zen rock garden. The next day, I made an early morning visit to Fushimi Inari Taisha to walk through the iconic vermillion torii gates and explored Eastern Kyoto, including Ginkaku-ji (Silver Pavilion) and a serene stroll along the Philosopher's Path. I capped off my trip with a final evening in Pontocho Alley, enjoying local Kyoto specialties before departure."
+                    },
+                    {
+                        "day": "Day 8",
+                        "title": "Departure",
+                        "description": "Flew back from Tokyo."
+                    }
+                ],
+                photos: [
+                    {
+                        src: "./Japan/IMG_0009.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0024.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0035.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0059.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0358.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0404.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0546.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0787.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0913.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0923.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_0944.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_8816.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_8956.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_9141.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_9178.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_9413.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_9441.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_9464.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_9576.jpg"
+                    },
+                    {
+                        src: "./Japan/IMG_9891.jpg"
+                    }
+                ],
+                tips: [
+                    "Get a Japan Rail Pass if you plan to visit multiple cities",
+                    "Download offline maps and translation apps before your trip",
+                    "Try convenience store food - it's surprisingly good!",
+                    "Carry cash as many places don't accept credit cards",
+                    "Learn basic Japanese phrases - it goes a long way"
+                ]
+            }
+        };
+        
+        // Set up event listeners for travel cards
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all travel cards
+            const travelCards = document.querySelectorAll('.travel-card');
+            
+            // Add click event to each card
+            travelCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Determine which destination based on image or title
+                    const img = this.querySelector('img').src;
+                    
+                    if (img.includes('IMG_0059')) {
+                        openTravelModal('japan');
+                    } else if (img.includes('IMG_2885')) {
+                        openTravelModal('shenandoah');
+                    } else if (img.includes('IMG_1231')) {
+                        openTravelModal('yellowstone');
+                    } else if (img.includes('IMG_8004')) {
+                        openTravelModal('alaska');
+                    }
+                });
+            });
+        });
+        
+        // Current photo index for fullsize viewer
+        let currentPhotoIndex = 0;
+        let currentPhotos = [];
+
+        function openTravelModal(destination) {
+            const data = travelData[destination];
+            if (!data) return;
+            
+            // Set header content
+            document.getElementById('modalHeaderImage').src = data.headerImage;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalDate').textContent = data.date;
+            
+            // Build itinerary content
+            let itineraryHTML = '';
+            data.itinerary.forEach(day => {
+                itineraryHTML += `
+                    <div class="day-item">
+                        <h4><span>${day.day}</span> ${day.title}</h4>
+                        <p>${day.description}</p>
+                    </div>
+                `;
+            });
+            document.getElementById('itineraryContent').innerHTML = itineraryHTML;
+            
+            // Build photos grid
+            let photosHTML = '';
+            data.photos.forEach((photo, index) => {
+                photosHTML += `
+                    <div class="photo-item" onclick="openFullsizeImage('${destination}', ${index})">
+                        <img src="${photo.src}">
+                    </div>
+                `;
+            });
+            document.getElementById('photosGrid').innerHTML = photosHTML;
+            
+            // Build tips list
+            let tipsHTML = '';
+            data.tips.forEach(tip => {
+                tipsHTML += `<li>${tip}</li>`;
+            });
+            document.getElementById('tipsList').innerHTML = tipsHTML;
+            
+            // Show modal with animation
+            const modal = document.getElementById('travelModalOverlay');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+        
+        function closeTravelModal() {
+            const modal = document.getElementById('travelModalOverlay');
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+        
+        function openFullsizeImage(destination, index) {
+            currentPhotos = travelData[destination].photos;
+            currentPhotoIndex = index;
+            
+            updateFullsizeImage();
+            
+            // Show fullsize viewer
+            document.getElementById('fullsizeViewer').classList.add('active');
+        }
+        
+        function updateFullsizeImage() {
+            const photo = currentPhotos[currentPhotoIndex];
+            document.getElementById('fullsizeImage').src = photo.src;
+            // document.getElementById('fullsizeCaption').textContent = photo.caption;
+        }
+        
+        function navigateImage(direction) {
+            currentPhotoIndex = (currentPhotoIndex + direction + currentPhotos.length) % currentPhotos.length;
+            updateFullsizeImage();
+        }
+        
+        function closeFullsizeViewer() {
+            document.getElementById('fullsizeViewer').classList.remove('active');
+        }
+        
+        // Close modals when clicking outside
+        document.getElementById('travelModalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeTravelModal();
+            }
+        });
+        
+        document.getElementById('fullsizeViewer').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFullsizeViewer();
+            }
+        });
+        
+        // Handle escape key press
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeTravelModal();
+                closeFullsizeViewer();
+            }
+        });
+    </script>
+</body>
+</html>
 
     <section id="about">
         <div class="container">
@@ -715,5 +1314,3 @@
             </div>
         </div>
     </section>
-</body>
-</html>
