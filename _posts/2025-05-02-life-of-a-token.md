@@ -31,19 +31,17 @@ The input embeddings are passed through multiple layers of the Transformer, wher
 
 After self-attention, the embeddings go through **feed-forward neural networks (FNN)**, which refine the embeddings further. These networks are followed by **layer normalization**, a technique that ensures the model remains stable and learns efficiently.
 
-## 7. FNN Output → Residual Connection
+Each token embedding is passed through the same small neural network, which applies non-linear transformations to help the model learn richer and more abstract features. While self-attention lets each word "look around" at others to gather context, the FNN helps the model reprocess each word individually using that context—adding depth and flexibility to what the model can understand.
 
-To maintain a flow of information across layers, a **residual connection** is added. This means that the output of the FNN is combined with the input of the layer, allowing the model to preserve information from earlier stages.
-
-## 8. Stacking of Layers
+## 7. Stacking of Layers
 
 The process of self-attention, feed-forward networks, layer normalization, and residual connections is repeated across multiple layers. With each layer, the model builds increasingly complex representations of the input text.
 
-## 9. Final Contextualized Embedding
+## 8. Final Contextualized Embedding
 
 After passing through all the layers, the final output is a set of **context-aware embeddings** that incorporate information from the entire sequence. These embeddings now contain a rich understanding of the text.
 
-## 10. Contextualized Embedding → Projection to Vocabulary Size
+## 9. Final Contextualized Embedding → Projection to Vocabulary Size
 
 Next, these embeddings are projected into a space that matches the model’s vocabulary size. This projection step is achieved through a linear transformation, and it produces a set of scores or **logits** that represent the likelihood of each word in the vocabulary being the next token.
 
@@ -56,4 +54,5 @@ The logits are passed through the **softmax function**, which transforms them in
 Finally, the token with the highest probability is selected as the **next token** in the sequence. This process is repeated iteratively until the model generates the desired length of text or reaches a stopping point (such as an end-of-sequence token).
 
 ---
+
 Through this series of transformations, GPT models are able to take raw text, process it in layers, and generate coherent, contextually relevant outputs. Understanding these layers helps us appreciate the complexity and power behind GPT.
