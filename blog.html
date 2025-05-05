@@ -1,0 +1,184 @@
+---
+layout: default
+title: Blog
+permalink: /
+---
+
+<!-- Blog Section HTML -->
+<section id="blog">
+    <div class="container">
+        <h2 class="section-title">Blog Posts</h2>
+        <div class="blog-grid">
+            {% for post in site.posts %}
+            <div class="blog-card">
+                <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+                <div class="post-date">{{ post.date | date: "%B %d, %Y" }}</div>
+                <p>{{ post.excerpt }}</p>
+                <a href="{{ post.url | relative_url }}" class="read-more">Read More →</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Blog CSS - Simply add this style tag to your head or include in your main CSS file -->
+<style>
+/* Blog Section Styles */
+#blog {
+    padding: 6rem 0;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.blog-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.blog-card h3 {
+    margin-top: 0;
+    font-size: 1.4rem;
+}
+
+.blog-card h3 a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.blog-card h3 a:hover {
+    color: var(--accent, #4a89dc);
+}
+
+.post-date {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--accent, #4a89dc);
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+}
+
+.read-more:hover {
+    transform: translateX(5px);
+}
+
+/* Individual blog post page - You'll need to add this to your post layout */
+.blog-post {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.blog-post .post-date {
+    margin-bottom: 2rem;
+}
+
+.post-content {
+    line-height: 1.8;
+}
+
+.post-content p, .post-content ul, .post-content ol {
+    margin-bottom: 1.5rem;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+/* Code blocks in blog posts */
+.post-content pre {
+    background: #f1f1f1;
+    border-radius: 4px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.post-content code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+}
+
+/* Blockquotes in blog posts */
+.post-content blockquote {
+    border-left: 4px solid var(--accent, #4a89dc);
+    padding-left: 1rem;
+    margin-left: 0;
+    font-style: italic;
+    color: #555;
+}
+
+/* Back to blog link */
+.back-to-blog {
+    display: inline-block;
+    margin-top: 2rem;
+    color: var(--accent, #4a89dc);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-to-blog:hover {
+    text-decoration: underline;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .blog-post {
+        padding: 1.5rem;
+        margin: 2rem 1rem;
+    }
+    
+    .blog-post h1 {
+        font-size: 2rem;
+    }
+}
+</style>
