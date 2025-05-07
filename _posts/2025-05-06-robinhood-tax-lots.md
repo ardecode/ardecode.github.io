@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "TIL: Robinhood Now Lets You Choose Tax Lots When Selling Stocks"
-date: 2025-05-07 12:00:00 -0000
+date: 2025-05-06
 categories: [Investing, Taxes, Robinhood]
 ---
 
@@ -46,4 +46,4 @@ This gives you greater control:
 
 ---
 
-Thank you!
+Thanks for reading!
