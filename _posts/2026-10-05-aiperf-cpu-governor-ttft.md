@@ -15,7 +15,7 @@ Here's the catch. AIPerf's TTFT and its `effective_*` and `active_*` metrics are
 
 - Host: dual-socket Intel Xeon Gold 6448Y, 64 cores / 128 threads. Governor changed on all 128.
 - GPU: one NVIDIA L40S running vLLM. OpenAI chat endpoint, streaming, `max_model_len` 4096.
-- Client: AIPerf with 32 workers (`--concurrency 32`), not pinned to CPUs. Same container as vLLM, hitting `127.0.0.1`.
+- Client: AIPerf with 32 workers (`--concurrency 32`), not pinned to individual cores. Same host as vLLM but on the other socket, so it isn't fighting vLLM for cores. It hits vLLM at `127.0.0.1`.
 - The only change: `cpupower frequency-set -g performance` vs `-g powersave`. The box normally runs `schedutil`.
 
 What the CPUs actually ran at:
