@@ -1,102 +1,68 @@
 ---
 layout: post
-title: "From Self-Attention to Mixture of Experts: A First-Principles Exploration"
+title: "From Self-Attention to Mixture of Experts, One Question at a Time"
 date: 2025-05-02
 categories: [transformers, MoE, deep-learning]
 ---
 
-This blog captures my journey as I tried to understand how a Transformer block works — from the self-attention mechanism to the feed-forward network (FNN), and eventually into the world of **Mixture of Experts (MoE)**. Rather than jumping into equations or research jargon, I started with simple questions that naturally arose as I tried to break things down from first principles.
+I wanted to understand Mixture of Experts. Turned out I didn't fully understand the layer it replaces. So I went back to the start and asked the basic questions in order.
 
----
+All the numbers below assume a hidden size of 768.
 
-## How Does Self-Attention Work?
+## What does self-attention give you?
 
-I began by trying to make sense of self-attention. The key insight is:
+Self-attention decides which tokens should pay attention to which. Each token comes out as a 768-dim vector that now carries some context from the others. 10 tokens in, a 10 × 768 matrix out.
 
-> **Self-attention learns which tokens in a sequence should attend to each other.**
+That matrix goes to the feed-forward network (FFN).
 
-Each token outputs a 768-dimensional vector (assuming hidden size = 768). For 10 tokens, the self-attention layer gives us a **10×768 matrix**. This output then goes to the next layer in the Transformer block.
+## Do all 10 tokens go into one FFN together?
 
----
+This is where I got stuck. No.
 
-## What Happens After Self-Attention?
+Each of the 10 vectors goes through the FFN separately. Same FFN, same weights, applied to every token. Not 10 different networks, and the tokens can't see each other at this step. In practice it's one matrix multiply over the whole 10 × 768 block, so it's still fast.
 
-The next layer is the **Feed-Forward Network (FNN)**, which is applied **independently to each token**.
+When papers say the FFN is applied "independently", this is all they mean. Same network, no talking between tokens.
 
-This initially confused me:
+## What does the FFN actually do?
 
-> “Do we feed all 10 tokens into a single FNN?”
+Expand, apply a nonlinearity, compress back:
 
-No. It turns out that **each of the 10 token embeddings is passed independently through the same FNN**, i.e., the same parameters are applied to each token’s vector in parallel (not 10 different FNNs). This is efficiently implemented in batch using matrix operations.
+`FFN(x) = max(0, xW₁ + b₁)W₂ + b₂`
 
----
+768 → 3,072 → 768. The inner size is called `d_ff` and is usually 4× the hidden size. (That's ReLU, from the original Transformer paper. GPT models use GELU. Same idea.)
 
-## What Does "Independently" Mean?
+The FFN is also where most of the parameters are. Per layer it has about twice the weights of attention.
 
-"Independently" just means that **the FNN processes each token vector without considering the others**. It does not mean separate FNNs—just the same FNN applied to each token.
+## Where does MoE come in?
 
----
+MoE swaps that one FFN for a set of FFNs, called experts, plus a small router. For each token the router picks the top K experts (often 2) and only those run.
 
-## So What Does the FNN Actually Do?
+So you get a lot more parameters without a lot more compute per token. 16 experts with top-2 routing is 16× the FFN parameters, but each token only runs 2 of them.
 
-A standard Transformer FNN looks like this:
+## So what's the problem?
 
-`FNN(x) = max(0, xW₁ + b₁)W₂ + b₂`
+With only a handful of experts, each one ends up covering a lot of unrelated stuff. One expert might be handling code, French and arithmetic because those tokens have nowhere else to go. That's the opposite of specialization, which was the whole point.
 
-- Input: A 768-dim token vector
-- Hidden layer: Often 3072-dim (called `d_ff`)
-- Output: Back to 768-dim
+## Fine-grained experts
 
-So it expands, applies nonlinearity, and compresses back.
+The paper I was reading, DeepSeekMoE, fixes this by cutting each expert into `m` smaller ones.
 
----
+1. Each small expert's hidden size drops to `d_ff / m`.
+2. You now have `m` times as many experts.
+3. The router picks `mK` of them instead of `K`.
 
-## Where Do Mixture of Experts (MoE) Come In?
+Total parameters stay the same. Compute per token stays the same. What changes is how many ways the experts can be combined.
 
-While standard Transformers use the same FNN for all tokens, **MoE replaces this shared FNN with a pool of multiple FNNs (called “experts”)**, and each token is routed to a subset of these experts.
+Think about this. 16 experts with top-2 routing gives 120 possible combinations. Split each one into 4 and you have 64 experts with top-8 routing. That's 4,426,165,368 combinations. Same compute, from 120 to 4.4 billion.
 
-However, this raises problems:
+Smaller experts can stick to narrower jobs, and the router has far more ways to mix them.
 
-- If you have **limited experts**, they may be forced to learn a **hybrid of unrelated knowledge**.
-- This **reduces specialization**—the very thing MoE was supposed to improve.
+DeepSeekMoE also keeps a few "shared" experts that every token goes through, so the routed ones don't all have to relearn common knowledge. That's for another post.
 
----
+## What I took away
 
-## 💡 Fine-Grained Expert Segmentation
+- Attention moves information between tokens. The FFN works on each token alone.
+- MoE turns that one FFN into many and runs only a few per token.
+- Fine-grained MoE makes the experts smaller and more numerous. Same compute, far more combinations.
 
-To solve this, the paper I studied proposed **splitting each expert into `m` smaller "micro-experts"**, reducing the hidden size of each by `1/m`.
-
-Then, instead of activating 2 full experts (top-2 routing), we activate **m×K micro-experts** to maintain the same total compute.
-
-### Why is this better?
-
-1. **Each micro-expert specializes in a smaller space.**
-2. **More combinations**: If you split 16 experts into 4 each → 64 micro-experts. Top-8 routing yields millions of combinations, improving flexibility.
-
----
-
-## How Does the Math Work?
-
-If each expert’s hidden size is `d_ff`, and we split it into `m` micro-experts, then:
-
-- Each micro-expert gets a hidden size of `d_ff / m`
-- Total parameter count stays the same
-- Routing selects `mK` micro-experts instead of `K` full experts
-
-This gives you a fine-grained, modular way to distribute knowledge across specialized units.
-
----
-
-## Summary
-
-Here's what I learned:
-
-- **Self-attention** routes information across tokens.
-- **FNNs** act token-wise, without inter-token communication.
-- **MoE** allows model capacity to scale without increasing compute per token.
-- **Fine-grained MoE** introduces micro-experts to balance specialization and compute.
-- More expert combinations = better coverage and flexibility.
-
----
-
-Thanks for reading!
+Starting from "does the FFN see all 10 tokens?" was the right call. Most of what confused me about MoE was really confusion about the FFN.

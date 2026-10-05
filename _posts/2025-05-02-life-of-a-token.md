@@ -1,58 +1,61 @@
 ---
 layout: post
-title: "The Life of a Token: From Text to Prediction in GPT"
+title: "The Life of a Token in GPT"
 date: 2025-05-02 12:00:00 -0000
 categories: [GPT, Transformers, NLP]
 ---
 
-The GPT (Generative Pretrained Transformer) model has revolutionized natural language processing (NLP) with its ability to generate human-like text. But how does it actually work? In this blog, we’ll take you through the journey of a token — from raw text to meaningful predictions.
+Type "Hello world" into GPT-2 and it gives you back one token. Just one. Everything else you see is that same step running in a loop.
 
-## 1. Text → Tokenization
+I kept reading about attention heads and MoE layers without having the full path in my head, so I wrote it down end to end. GPT-2 small is the example throughout because the numbers are small enough to hold on to: a 50,257-token vocabulary, 768-dimensional embeddings, 12 layers and a 1,024-token context.
 
-The journey begins with **tokenization**, where raw input text is broken down into smaller units, often subwords or words. This process allows the model to work with manageable chunks of text. Tokenizers like **Byte Pair Encoding (BPE)** split the text into tokens, which serve as the building blocks for further processing.
+## 1. Text to tokens
 
-## 2. Tokens → Token IDs
+The model never sees characters. A tokenizer (Byte Pair Encoding, for GPT-2) chops the text into subword pieces. "Hello world" becomes two tokens: `Hello` and ` world`. The space belongs to the second token.
 
-Next, each token is mapped to a unique integer ID based on its position in the model's vocabulary. This step ensures that the model can work with a standardized representation of words and phrases.
+Common words get one token. Rare words get split into pieces.
 
-## 3. Token IDs → Token Embeddings
+## 2. Tokens to IDs
 
-The token IDs are then transformed into **token embeddings**. These are dense vector representations that capture semantic information about each token. These embeddings allow the model to understand the meaning of each word in the context of the input.
+Each token is looked up in the vocabulary and swapped for an integer. `Hello` is 15496, ` world` is 995. That's all a token ID is. A row number.
 
-## 4. Token Embeddings + Positional Embeddings = Input Embeddings
+## 3. IDs to embeddings
 
-Since the GPT model, like most Transformers, does not inherently understand the order of tokens, **positional embeddings** are added to the token embeddings. This step encodes the position of each token in the sequence, ensuring the model understands the relative order of words in the input text.
+That row number indexes into an embedding matrix of 50,257 × 768. Row 15496 is the 768-number vector for `Hello`.
 
-## 5. Input Embedding → Contextualized Embeddings (via Self-Attention)
+Think about this. That one matrix is 38.6 million parameters, close to a third of GPT-2 small.
 
-The input embeddings are passed through multiple layers of the Transformer, where the **self-attention mechanism** (often multi-head attention) comes into play. This mechanism allows each token to gather context from the other tokens in the sequence. By doing this, the model builds **contextualized embeddings**, where each token’s meaning is influenced by the surrounding words.
+## 4. Add the position
 
-## 6. Contextualized Embeddings → Feed-Forward Neural Network (FNN) + Layer Normalization
+Attention by itself doesn't know word order. "Dog bites man" and "man bites dog" have the same tokens. So GPT-2 learns a second vector for every position (a 1,024 × 768 matrix) and adds it to the token embedding. That sum is what goes into the first layer.
 
-After self-attention, the embeddings go through **feed-forward neural networks (FNN)**, which refine the embeddings further. These networks are followed by **layer normalization**, a technique that ensures the model remains stable and learns efficiently.
+## 5. Inside a layer
 
-Each token embedding is passed through the same small neural network, which applies non-linear transformations to help the model learn richer and more abstract features. While self-attention lets each word "look around" at others to gather context, the FNN helps the model reprocess each word individually using that context—adding depth and flexibility to what the model can understand.
+Each of the 12 layers does two things.
 
-## 7. Stacking of Layers
+1. Attention: Every token looks at the tokens before it (never after, that's the causal mask) and pulls in what's relevant. This is where ` world` picks up that it came after `Hello`. There are 12 heads running in parallel, each free to look for something different.
+2. Feed-forward network (FFN): Each token's vector goes through the same small MLP, on its own. 768 → 3,072 → 768. Attention moves information between tokens. The FFN works on what each token has collected.
 
-The process of self-attention, feed-forward networks, layer normalization, and residual connections is repeated across multiple layers. With each layer, the model builds increasingly complex representations of the input text.
+Both are wrapped with a residual connection (add the input back to the output) and layer normalization. GPT-2 puts the layer norm before each block instead of after, which makes deep stacks easier to train.
 
-## 8. Final Contextualized Embedding
+A layer gives back the same shape it took in, one 768-dim vector per token. That's why you can stack 12 of them. Or 96, like GPT-3.
 
-After passing through all the layers, the final output is a set of **context-aware embeddings** that incorporate information from the entire sequence. These embeddings now contain a rich understanding of the text.
+## 6. Vectors to logits
 
-## 9. Final Contextualized Embedding → Projection to Vocabulary Size
+After the last layer and one final layer norm, each vector is multiplied by the transpose of the embedding matrix from step 3. GPT-2 reuses that matrix instead of learning a new one (weight tying). Out come 50,257 numbers, one score per vocabulary entry. These are the logits.
 
-Next, these embeddings are projected into a space that matches the model’s vocabulary size. This projection step is achieved through a linear transformation, and it produces a set of scores or **logits** that represent the likelihood of each word in the vocabulary being the next token.
+For generation, only the logits at the last position matter. That's the model's guess for what comes next.
 
-## 11. Logits → Softmax
+## 7. Logits to a token
 
-The logits are passed through the **softmax function**, which transforms them into probabilities. These probabilities represent the model’s confidence in each possible next token.
+Softmax turns the logits into probabilities. Then you pick one.
 
-## 12. Prediction (Next Token)
+Always picking the highest (greedy decoding) is the simplest option, but it gets repetitive. Usually the next token is sampled instead, with temperature, top-k or top-p deciding how adventurous it gets.
 
-Finally, the token with the highest probability is selected as the **next token** in the sequence. This process is repeated iteratively until the model generates the desired length of text or reaches a stopping point (such as an end-of-sequence token).
+## 8. Do it again
 
----
+Append the new token and run the whole thing again. Stop at an end-of-text token or a length limit.
 
-Through this series of transformations, GPT models are able to take raw text, process it in layers, and generate coherent, contextually relevant outputs. Understanding these layers helps us appreciate the complexity and power behind GPT.
+This is the part I actually care about. Every generated token is a full pass through all 12 layers. Done naively, you'd recompute attention over the whole prefix every single time. The KV cache stores the keys and values from earlier tokens so each step only does the work for the new one. That's also why inference splits into prefill (the whole prompt in one go, compute-bound) and decode (one token at a time, memory-bound). Different post.
+
+Text in, one token out, repeat.

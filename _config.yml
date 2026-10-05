@@ -20,7 +20,7 @@
 
 title: Antarjaala Sanchaari
 description: >- # this means to ignore newlines until "baseurl:"
-  Passionate about Deep Learning (the deeper, the better! 🧠)
+  Notes on LLM inference, performance engineering and whatever else I'm trying to understand.
 baseurl: "" # the subpath of your site, e.g. /blog
 permalink: /:categories/:year/:month/:day/:title/
 url: "https://ardecode.github.io" # the base hostname & protocol for your site, e.g. http://example.com

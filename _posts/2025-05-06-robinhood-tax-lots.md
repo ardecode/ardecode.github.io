@@ -1,49 +1,33 @@
 ---
 layout: post
-title: "TIL: Robinhood Now Lets You Choose Tax Lots When Selling Stocks"
+title: "TIL: Robinhood Lets You Pick Tax Lots Now"
 date: 2025-05-06
 categories: [Investing, Taxes, Robinhood]
 ---
 
-If you're investing through Robinhood, here's a useful new feature you may not have noticed — **the ability to choose specific tax lots when selling stocks**.
+Robinhood finally lets you choose which shares you're selling. Fidelity and Schwab have had this forever.
 
-## 🚧 The Old Way: FIFO by Default
+## Before: FIFO, no choice
 
-Until recently, Robinhood followed the **FIFO (First-In, First-Out)** accounting method by default — and you had no option to change it.
+Until now Robinhood always sold your oldest shares first (FIFO, first in first out) and you couldn't change it.
 
-This meant that when you sold shares of a stock:
+Why does that matter? Taxes. In the US, shares held more than a year are long-term and taxed at a lower rate. Shares held a year or less are short-term and taxed as ordinary income. And which shares you sell decides how big the gain is.
 
-- The **oldest shares** (those bought first) were sold first.
-- This had significant **tax implications** — older shares likely fall under **long-term capital gains** (taxed at a lower rate), while newer ones might be **short-term** (taxed as ordinary income).
+Say you own 20 shares of a stock trading at $100:
 
-### Example:
+- 10 bought 3 years ago at $50
+- 10 bought 6 months ago at $120
 
-> You hold 20 shares of a stock:  
-> - 10 bought 3 years ago  
-> - 10 bought 6 months ago  
->  
-> You sell 15 shares → Robinhood would sell:  
-> - 10 long-term shares  
-> - 5 short-term shares
+You sell 10. Under FIFO, Robinhood sells the old ones. That's a $500 gain and you owe tax on it.
 
-You had no say in which ones to sell, making tax optimization impossible.
+Pick the newer lot instead and the same sale is a $200 loss, which you can use to offset other gains. Same stock, same number of shares, opposite tax outcome. Before this change, you didn't get to pick.
 
-## ✅ The New Way: Choose Specific Tax Lots
+## Now: pick your lots
 
-Robinhood now allows investors to **select specific lots** when selling, a feature long available in traditional brokerages like Fidelity and Schwab.
+You can choose specific lots when you sell, which means you can:
 
-This gives you greater control:
+1. Sell long-term lots when you want the lower rate.
+2. Sell lots that are underwater to harvest the loss.
+3. Sell high-cost lots to keep the taxable gain small.
 
-- **Minimize tax liability** by choosing long-term lots
-- **Harvest losses** by selling specific shares at a loss
-- **Strategically manage gains** for tax planning
-
-## 💡 Why This Matters
-
-- More control = **better tax efficiency**
-- Enables **tax-loss harvesting**
-- Makes Robinhood more competitive with advanced platforms
-
----
-
-Thanks for reading!
+It's a small feature, but it was the one big gap between Robinhood and the traditional brokers. If you've been buying the same stock over a few years, look at your lots before your next sale.
