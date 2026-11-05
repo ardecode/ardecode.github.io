@@ -2,7 +2,7 @@
 
 Personal site and blog (Jekyll 3.10 via the `github-pages` gem, deployed from `main` by GitHub Pages).
 
-- `index.html` is the homepage. It has empty front matter so Jekyll runs Liquid in it (the Latest Posts section). Avoid `{{` / `{%` anywhere else in that file.
+- `index.html` is the homepage. It has front matter so Jekyll runs Liquid in it (the Writing and Projects sections and the footer year). Homepage projects are the entries marked `featured: true` in `_data/projects.yml`, which also drives `projects.html`. Don't add other `{{` / `{%` by accident. Images live in `assets/img/` (resized copies; keep new ones under ~500 KB).
 - `projects.html` is the projects page. `blog.html` lists all posts at `/blog/`.
 - `_posts/` holds published posts. `_drafts/` holds work in progress (not built on GitHub Pages, but the repo is public, so drafts are visible on GitHub).
 - Permalinks are `/:categories/:year/:month/:day/:title/`. Changing a post's categories or filename changes its URL, so don't do that to published posts.

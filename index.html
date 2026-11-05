@@ -15,8 +15,22 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arijit Desai - Portfolio</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <title>Arijit Desai | Senior Performance Engineer, AI Compute</title>
+    <meta name="description" content="Arijit Desai is a performance engineer working on LLM inference and AI infrastructure. Notes, benchmarks and projects.">
+    <meta name="author" content="Arijit Desai">
+    <link rel="canonical" href="https://ardecode.github.io/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Arijit Desai | Senior Performance Engineer">
+    <meta property="og:description" content="I find out why AI systems are slower than they should be, from the model down to the hardware.">
+    <meta property="og:url" content="https://ardecode.github.io/">
+    <meta property="og:image" content="https://ardecode.github.io/assets/img/hero.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ardecode">
+    <link rel="alternate" type="application/atom+xml" title="Arijit Desai" href="/feed.xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="./assets/img/hero.jpg">
     <style>
         :root {
             --black: #000000;
@@ -24,6 +38,8 @@
             --gray-light: #f5f5f5;
             --gray: #666666;
             --accent: #2a2a2a;
+            --signal: #16a34a;
+            --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
         }
 
         * {
@@ -34,7 +50,8 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
             line-height: 1.6;
             background: var(--white);
             color: var(--black);
@@ -47,7 +64,7 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            padding: 1.5rem;
+            padding: 1rem 1.5rem;
             z-index: 1000;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
@@ -61,8 +78,8 @@
         }
 
         .logo {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 1.25rem;
+            font-weight: 800;
             color: var(--black);
             text-decoration: none;
             letter-spacing: -1px;
@@ -74,11 +91,26 @@
             margin-left: 2rem;
             transition: opacity 0.3s ease;
             font-weight: 500;
+            font-size: 0.95rem;
         }
 
         .nav-links a:hover {
             opacity: 0.6;
         }
+
+        /* Over the hero: transparent bar, white links, no logo (the hero shows the name) */
+        nav, .logo, .nav-links a {
+            transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+        }
+
+        nav.over-hero {
+            background: transparent;
+            backdrop-filter: none;
+            border-bottom-color: transparent;
+        }
+
+        nav.over-hero .logo { opacity: 0; pointer-events: none; }
+        nav.over-hero .nav-links a { color: var(--white); }
 
         /* Hero Section */
         .hero {
@@ -98,10 +130,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('./IMG_8129.JPG'); /* Replace with your image path */
+            background-image: url('./assets/img/hero.jpg');
             background-size: cover;
             background-position: center;
-            /* opacity: 0.85; */
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(100deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.7) 45%, rgba(0,0,0,0.25) 100%);
             z-index: 1;
         }
 
@@ -109,28 +148,70 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            padding: 3rem;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 4px;
-            backdrop-filter: blur(8px);
+            padding: 6rem 1rem 4rem;
             position: relative;
             z-index: 2;
-            animation: fadeInUp 1s ease-out;
+            color: var(--white);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-kicker {
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-kicker .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--signal);
+            margin-right: 0.6rem;
+            vertical-align: middle;
+            box-shadow: 0 0 0 4px rgba(22,163,74,0.25);
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
             color: var(--white);
-            border-bottom: 4px solid var(--white);
-            margin-bottom: 2rem;
-            line-height: 1.2;
-            letter-spacing: -2px;
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
         }
 
-        .hero p {
-            font-size: 1.5rem;
-            color: var(--white);
+        .hero .hero-lede {
+            font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+            color: rgba(255,255,255,0.88);
+            max-width: 40ch;
+            line-height: 1.45;
+            margin-bottom: 2.5rem;
         }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.85rem 1.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary { background: var(--white); color: var(--black); }
+        .btn-ghost { border: 1px solid rgba(255,255,255,0.5); color: var(--white); }
+        .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
 
         /* Scroll Indicator */
         .scroll-indicator {
@@ -180,8 +261,9 @@
 
         .section-title {
             font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 4rem;
-            letter-spacing: -1px;
+            letter-spacing: -0.03em;
             position: relative;
             display: inline-block;
         }
@@ -198,80 +280,99 @@
 
         /* About Section */
         .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text {
             font-size: 1.1rem;
             line-height: 1.8;
         }
 
-        .stats-grid {
+        .about-grid p + p { margin-top: 1.5rem; }
+
+        #about a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        #about a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+
+
+
+
+
+        /* Shared row list (Writing + Projects), matches /blog/ and /projects.html */
+        .row-list { border-top: 1px solid var(--black); }
+
+        .row {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+            grid-template-columns: 90px 1fr;
+            gap: 1.5rem;
+            padding: 1.4rem 0 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            color: inherit;
+            text-decoration: none;
         }
 
-        .stat-card {
-            text-align: center;
-            padding: 2rem;
-            background: var(--gray-light);
+        .row-meta {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--gray);
+            padding-top: 0.3rem;
         }
 
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+        .row h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            margin-bottom: 0.35rem;
         }
 
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        .row p { color: #444; }
+
+        a.row:hover h3 {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
         }
 
-        .project-card {
-            position: relative;
-            padding: 2.5rem;
-            background: var(--white);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+        .row-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.9rem; }
+
+        .row-links a {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--black);
+            text-decoration: none;
+            padding: 0.35rem 0.75rem;
+            border: 1px solid var(--black);
+            border-radius: 6px;
+            transition: background 0.15s ease, color 0.15s ease;
         }
 
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 0;
-            background: var(--black);
-            transition: height 0.3s ease;
+        .row-links a:hover { background: var(--black); color: var(--white); }
+
+        .section-more {
+            display: inline-block;
+            margin-top: 1.75rem;
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--black);
+            text-decoration: none;
+            border-bottom: 1px solid currentColor;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
+        .section-more:hover { opacity: 0.6; }
 
-        .project-card:hover::before {
-            height: 100%;
-        }
-
-        .project-card h3 {
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            letter-spacing: -0.5px;
+        @media (max-width: 640px) {
+            .row { grid-template-columns: 1fr; gap: 0.25rem; }
+            .row-meta { padding-top: 0; }
         }
 
         /* Travel Section */
         .travel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
             padding: 0.5rem;
         }
 
@@ -346,135 +447,34 @@
             }
         }
 
-        /* Latest Posts */
-        a.post-card {
-            display: block;
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .post-card .post-date {
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin-bottom: 0.75rem;
-        }
-
-        .all-posts-link {
-            display: inline-block;
-            margin-top: 2.5rem;
-            color: var(--accent);
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        .all-posts-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Skills */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            padding: 0.25rem;
-        }
-
-        .proficiency-card {
-            background: var(--white);
-            padding: 1.25rem;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .proficiency-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .proficiency-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--gray-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .proficiency-skills {
+        /* Contact: one line */
+        .contact-line {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-tag {
-            background: var(--gray-light);
-            color: var(--black);
-            padding: 0.4rem 0.8rem;
-            font-size: 0.85rem;
-            border-radius: 4px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: var(--accent);
-            color: var(--white);
-        }
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .contact-card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .contact-card {
-            position: relative;
-            padding: 2.5rem;
-            text-align: center;
-            background: var(--white);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-color: transparent;
-        }
-
-        .contact-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .contact-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: var(--accent);
-        }
-
-        .contact-text {
-            font-weight: 500;
-            color: var(--black);
+            gap: 0.75rem 2.5rem;
             font-size: 1.1rem;
         }
 
-        .contact-card:hover .contact-text {
-            color: var(--accent);
+        .contact-line a {
+            color: var(--black);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+            padding-bottom: 2px;
+            transition: border-color 0.15s ease;
         }
+
+        .contact-line a:hover { border-color: var(--black); }
+
+        .contact-line .label {
+            display: block;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 0.2rem;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -513,9 +513,6 @@
                 padding: 4rem 1rem;
             }
 
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         /* Modal Styles */
@@ -737,7 +734,7 @@
         }
 
         .tips-list li:before {
-            content: "📌";
+            content: "\2022";
             margin-right: 0.75rem;
         }
 
@@ -818,10 +815,35 @@
             right: 20px;
         }
 
-        /* Make travel cards clickable */
-        .travel-card {
+        /* Only cards with trip details are clickable */
+        .travel-card[data-trip] {
             cursor: pointer;
         }
+
+        .travel-card .trip-cta {
+            display: inline-block;
+            margin-top: 0.75rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        footer {
+            padding: 2.5rem 2rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        footer a { color: inherit; }
 
         @media (max-width: 768px) {
             .travel-modal {
@@ -847,14 +869,13 @@
     </style>
 </head>
 <body>
-    <nav>
+    <nav class="over-hero">
         <div class="nav-content">
             <a href="#" class="logo">Arijit Desai</a>
             <div class="nav-links">
                 <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
                 <a href="/blog/">Blog</a>
+                <a href="#projects">Projects</a>
                 <a href="#travel">Travel</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -862,6 +883,15 @@
     </nav>
 
     <section class="hero">
+        <div class="hero-content">
+            <p class="hero-kicker"><span class="dot"></span>Senior Performance Engineer &middot; AI Compute</p>
+            <h1>Arijit Desai</h1>
+            <p class="hero-lede">I find out why AI systems are slower than they should be, from the model down to the hardware.</p>
+            <div class="hero-actions">
+                <a href="/blog/" class="btn btn-primary">Read the blog</a>
+                <a href="#contact" class="btn btn-ghost">Get in touch</a>
+            </div>
+        </div>
         <a href="#about" class="scroll-indicator">
             <div class="arrow"></div>
             <span class="text">Scroll</span>
@@ -914,9 +944,9 @@
         // Travel data - This is your template that can be used for all travel cards
         const travelData = {
             "japan": {
-                title: "🗾 Japan: Tokyo & Kyoto",
+                title: "Japan: Tokyo & Kyoto",
                 date: "April 2023",
-                headerImage: "./IMG_0059.jpg",
+                headerImage: "./assets/img/japan-card.jpg",
                 description: "Tokyo, Kyoto and a day trip to Kamakura. Shibuya and Shinjuku, temples everywhere in Kyoto, and a lot of sushi, ramen and matcha.",
                 itinerary: [
                     {
@@ -942,64 +972,64 @@
                 ],
                 photos: [
                     {
-                        src: "./Japan/IMG_0009.jpg"
+                        src: "./assets/img/japan/IMG_0009.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0024.jpg"
+                        src: "./assets/img/japan/IMG_0024.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0035.jpg"
+                        src: "./assets/img/japan/IMG_0035.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0059.jpg"
+                        src: "./assets/img/japan/IMG_0059.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0358.jpg"
+                        src: "./assets/img/japan/IMG_0358.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0404.jpg"
+                        src: "./assets/img/japan/IMG_0404.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0546.jpg"
+                        src: "./assets/img/japan/IMG_0546.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0787.jpg"
+                        src: "./assets/img/japan/IMG_0787.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0913.jpg"
+                        src: "./assets/img/japan/IMG_0913.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0923.jpg"
+                        src: "./assets/img/japan/IMG_0923.jpg"
                     },
                     {
-                        src: "./Japan/IMG_0944.jpg"
+                        src: "./assets/img/japan/IMG_0944.jpg"
                     },
                     {
-                        src: "./Japan/IMG_8816.jpg"
+                        src: "./assets/img/japan/IMG_8816.jpg"
                     },
                     {
-                        src: "./Japan/IMG_8956.JPG"
+                        src: "./assets/img/japan/IMG_8956.jpg"
                     },
                     {
-                        src: "./Japan/IMG_9141.jpg"
+                        src: "./assets/img/japan/IMG_9141.jpg"
                     },
                     {
-                        src: "./Japan/IMG_9178.jpg"
+                        src: "./assets/img/japan/IMG_9178.jpg"
                     },
                     {
-                        src: "./Japan/IMG_9413.jpg"
+                        src: "./assets/img/japan/IMG_9413.jpg"
                     },
                     {
-                        src: "./Japan/IMG_9441.jpg"
+                        src: "./assets/img/japan/IMG_9441.jpg"
                     },
                     {
-                        src: "./Japan/IMG_9464.jpg"
+                        src: "./assets/img/japan/IMG_9464.jpg"
                     },
                     {
-                        src: "./Japan/IMG_9576.jpg"
+                        src: "./assets/img/japan/IMG_9576.jpg"
                     },
                     {
-                        src: "./Japan/IMG_9891.JPG"
+                        src: "./assets/img/japan/IMG_9891.jpg"
                     }
                 ],
                 tips: [
@@ -1017,22 +1047,11 @@
             // Get all travel cards
             const travelCards = document.querySelectorAll('.travel-card');
             
-            // Add click event to each card
+            // Open the trip modal for cards that have trip details
             travelCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    // Determine which destination based on image or title
-                    const img = this.querySelector('img').src;
-                    
-                    if (img.includes('IMG_0059')) {
-                        openTravelModal('japan');
-                    } else if (img.includes('IMG_2885')) {
-                        openTravelModal('shenandoah');
-                    } else if (img.includes('IMG_1231')) {
-                        openTravelModal('yellowstone');
-                    } else if (img.includes('IMG_8004')) {
-                        openTravelModal('alaska');
-                    }
-                });
+                const trip = card.dataset.trip;
+                if (!trip || !travelData[trip]) return;
+                card.addEventListener('click', () => openTravelModal(trip));
             });
         });
         
@@ -1066,7 +1085,7 @@
             data.photos.forEach((photo, index) => {
                 photosHTML += `
                     <div class="photo-item" onclick="openFullsizeImage('${destination}', ${index})">
-                        <img src="${photo.src}">
+                        <img src="${photo.src}" loading="lazy" alt="">
                     </div>
                 `;
             });
@@ -1136,196 +1155,102 @@
                 closeFullsizeViewer();
             }
         });
+
+        // Header turns solid (and shows the logo) once the hero is scrolled past
+        (function () {
+            const nav = document.querySelector('nav');
+            const hero = document.querySelector('.hero');
+            function update() {
+                const pastHero = window.scrollY > hero.offsetHeight - nav.offsetHeight - 10;
+                nav.classList.toggle('over-hero', !pastHero);
+            }
+            update();
+            window.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+        })();
     </script>
-</body>
-</html>
 
     <section id="about">
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-grid">
-                <div class="about-text">
-                    <p>I'm a performance engineer. Most of my work comes down to one question: why is this slower than it should be? At <strong>Nutanix</strong> I was a Member of Technical Staff-4 in Performance Engineering, working on the performance of <strong>Nutanix Enterprise AI (NAI)</strong>.</p>
-                    <br>
-                    <p>That meant building the benchmarking and regression frameworks, then chasing bottlenecks wherever they turned up: GPUs, CPUs, NUMA, networking, storage, distributed inference. The problems I like most are the ones where the bottleneck isn't obvious. Design the experiment, profile it, figure out what's actually happening, fix it, measure again.</p>
-                    <br>
-                    <p>Right now I'm mostly into LLM inference and GPU performance, plus distributed systems, observability and developer tooling. I read papers, contribute to open source when I can and write some of it down on the <a href="/blog/">blog</a>. The goal is to understand these systems all the way from the model down to the hardware.</p>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">7+ ⚡</div>
-                        <div>Years Experience</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">14 🏞️</div>
-                        <div>National Parks Visited</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">100+ ☕</div>
-                        <div>Coffee Cups</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">4 🌏</div>
-                        <div>Countries Visited</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Skills & Expertise</h2>
-            <div class="skills-container">
-                <div class="proficiency-card">
-                    <h3 class="proficiency-title">AI & Machine Learning</h3>
-                    <div class="proficiency-skills">
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">Scikit-learn</span>
-                        <span class="skill-tag">NLTK</span>
-                        <span class="skill-tag">Pandas</span>
-                        <span class="skill-tag">NumPy</span>
-                        <span class="skill-tag">Matplotlib</span>
-                        <span class="skill-tag">Jupyter</span>
-                        <span class="skill-tag">SciPy</span>
-                        <span class="skill-tag">Hugging Face</span>
-                    </div>
-                </div>
-
-                <div class="proficiency-card">
-                    <h3 class="proficiency-title">BackEnd</h3>
-                    <div class="proficiency-skills">
-                        <span class="skill-tag">Django</span>
-                        <span class="skill-tag">Django Rest Framework</span>
-                    </div>
-                </div>
-
-                <div class="proficiency-card">
-                    <h3 class="proficiency-title">Observability and Monitoring</h3>
-                    <div class="proficiency-skills">
-                        <span class="skill-tag">OpenTelemetry</span>
-                        <span class="skill-tag">Prometheus</span>
-                        <span class="skill-tag">Grafana</span>
-                        <span class="skill-tag">Loki</span>
-                    </div>
-                </div>
-    
-                <div class="proficiency-card">
-                    <h3 class="proficiency-title">CI/CD</h3>
-                    <div class="proficiency-skills">
-                        <span class="skill-tag">Gitlab</span>
-                    </div>
-                </div>
-    
-                <div class="proficiency-card">
-                    <h3 class="proficiency-title">DevOps</h3>
-                    <div class="proficiency-skills">
-                        <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">Docker</span>
-                    </div>
-                </div>
-    
-                <div class="proficiency-card">
-                    <h3 class="proficiency-title">Databases</h3>
-                    <div class="proficiency-skills">
-                        <span class="skill-tag">PostgreSQL</span>
-                    </div>
-                </div>
-    
-                <div class="proficiency-card">
-                    <h3 class="proficiency-title">Misc</h3>
-                    <div class="proficiency-skills">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">Agile/Scrum</span>
-                    </div>
-                </div>
-    
-                <div class="proficiency-card">
-                    <h3 class="proficiency-title">Languages</h3>
-                    <div class="proficiency-skills">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Java</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid" style="grid-template-columns: repeat(2, 1fr);">
-                <div class="project-card">
-                    <h3>🌐 MCP Server for NetBox</h3>
-                    <p>An MCP server for NetBox. Ask Claude about the datacenter in plain English (clusters, devices, interfaces, network config) and it pulls the answer straight from NetBox.</p>
-                </div>                                
-                <div class="project-card">
-                    <h3>🎙️ The India Brief</h3>
-                    <p>A daily podcast on Indian news that runs on its own. It scrapes the news, picks the top stories and turns them into a conversation with NotebookLM.</p>
-                </div>
-                <div class="project-card">
-                    <h3>🤖 Sanchaari - AI Assistant</h3>
-                    <p>An AI assistant that shows its work. Calculations, Wikipedia, world time, stock prices, definitions, news and translation, with the LLM's reasoning visible at every step.</p>
-                </div>
-                <div class="project-card">
-                    <h3>🚗 Safar - Ride Sharing Platform</h3>
-                    <p>A ride-sharing app that matches drivers with passengers, with chat built in.</p>
-                </div>
-                <div class="project-card" style="display: flex; align-items: center; justify-content: center; background: transparent; box-shadow: none;">
-                    <a href="projects.html" style="display: inline-flex; align-items: center; text-decoration: none; color: var(--accent); font-weight: 500; padding: 1.5rem 2.5rem; border: 2px solid var(--accent); border-radius: 4px; transition: all 0.3s ease; font-size: 1.1rem;">
-                        View All Projects
-                        <span style="margin-left: 8px; transition: transform 0.3s ease;">→</span>
-                    </a>
-                </div>
+                <p>Hi, I'm Arijit. I'm joining <a href="https://www.crusoe.ai" target="_blank" rel="noopener"><strong>Crusoe</strong></a> as a Senior Performance Engineer on the AI Compute team. Most of my work comes down to one question: why is this slower than it should be?</p>
+                <p>Before Crusoe, I was a Member of Technical Staff (MTS-4) at <a href="https://www.nutanix.com" target="_blank" rel="noopener"><strong>Nutanix</strong></a>, working on the performance of LLM inference systems and AI infrastructure. I benchmarked and tuned inference engines so they scaled well, with better SLO latency, throughput and GPU utilization. When something was slow, I found out why with micro-benchmarks, profiling and system-level analysis across GPU, CPU, memory, storage and interconnect. I wrote the benchmarks that evaluated production AI systems, validated optimizations and characterized performance across the hardware and software stack. And I built the infrastructure around it: regression detection, repeatable performance tests and observability, so we could actually see what the system was doing. Before that, I did my Master's in Computer Science at Stony Brook University (SUNY).</p>
+                <p>The problems I like most are the ones where the bottleneck isn't obvious. Design the experiment, profile it, figure out what's actually happening, fix it, measure again. I write some of it down on the <a href="/blog/">blog</a>. The goal is to understand these systems all the way from the model down to the hardware.</p>
             </div>
         </div>
     </section>
 
     <section id="writing">
         <div class="container">
-            <h2 class="section-title">Latest Posts</h2>
-            <div class="projects-grid">
+            <h2 class="section-title">Writing</h2>
+            <div class="row-list">
                 {% for post in site.posts limit:3 %}
-                <a class="project-card post-card" href="{{ post.url | relative_url }}">
-                    <div class="post-date">{{ post.date | date: "%B %-d, %Y" }}</div>
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+                <a class="row" href="{{ post.url | relative_url }}">
+                    <time class="row-meta" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+                    <div>
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.excerpt | strip_html | strip | truncatewords: 30 }}</p>
+                    </div>
                 </a>
                 {% endfor %}
             </div>
-            <a href="/blog/" class="all-posts-link">All posts →</a>
+            <a href="/blog/" class="section-more">All {{ site.posts.size }} posts &rarr;</a>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="row-list">
+                {% assign featured = site.data.projects | where: "featured", true %}
+                {% for p in featured %}
+                <div class="row">
+                    <div class="row-meta">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</div>
+                    <div>
+                        <h3>{{ p.title }}</h3>
+                        <p>{{ p.summary }}</p>
+                        <div class="row-links">
+                            {% for l in p.links %}<a href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }} &rarr;</a>{% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <a href="/projects.html" class="section-more">All {{ site.data.projects.size }} projects &rarr;</a>
         </div>
     </section>
 
     <section id="travel">
         <div class="container">
-            <h2 class="section-title">Travel Adventures</h2>
+            <h2 class="section-title">Travel</h2>
             <div class="travel-grid">
-                <div class="travel-card">
-                    <img src="./IMG_0059.jpg" alt="Tokyo and Kyoto, Japan">
+                <div class="travel-card" data-trip="japan">
+                    <img src="./assets/img/japan-card.jpg" loading="lazy" alt="Tokyo and Kyoto, Japan">
                     <div class="travel-info">
-                        <h3>🗾 Japan: Tokyo & Kyoto</h3>
+                        <h3>Japan: Tokyo & Kyoto</h3>
                         <p>Tokyo, Kyoto and a day trip to Kamakura. Shibuya and Shinjuku, temples everywhere in Kyoto, and a lot of sushi, ramen and matcha.</p>
+                        <span class="trip-cta">Itinerary &amp; photos &rarr;</span>
                     </div>
                 </div>
                 <div class="travel-card">
-                    <img src="./IMG_2885.JPG" alt="Shenandoah National Park">
+                    <img src="./assets/img/shenandoah.jpg" loading="lazy" alt="Shenandoah National Park">
                     <div class="travel-info">
-                        <h3>🌲 Shenandoah National Park</h3>
+                        <h3>Shenandoah National Park</h3>
                         <p>All 105 miles of Skyline Drive through Virginia's Blue Ridge Mountains, in the fall. The colors were unreal. Ran into black bears too.</p>
                     </div>
                 </div>
                 <div class="travel-card">
-                    <img src="./IMG_1231.JPG" alt="Yellowstone and Grand Teton">
+                    <img src="./assets/img/yellowstone.jpg" loading="lazy" alt="Yellowstone and Grand Teton">
                     <div class="travel-info">
-                        <h3>🌋 Yellowstone & Grand Teton</h3>
+                        <h3>Yellowstone & Grand Teton</h3>
                         <p>5 days. Old Faithful, geysers and hot springs everywhere, then the jagged peaks of the Tetons.</p>
                     </div>
                 </div>
                 <div class="travel-card">
-                    <img src="./IMG_8004.JPG" alt="Alaska">
+                    <img src="./assets/img/alaska.jpg" loading="lazy" alt="Alaska">
                     <div class="travel-info">
-                        <h3>❄️ Alaska</h3>
+                        <h3>Alaska</h3>
                         <p>Went above the Arctic Circle, saw the Northern Lights and explored the glaciers.</p>
                     </div>
                 </div>
@@ -1337,38 +1262,20 @@
     <section id="contact">
         <div class="container">
             <h2 class="section-title">Get in Touch</h2>
-            <div class="contact-grid">
-                <a href="mailto:desaiarijit@gmail.com" class="contact-card-link">
-                    <div class="contact-card">
-                        <span class="contact-icon">📧</span>
-                        <h3>Email</h3>
-                        <span class="contact-text">desaiarijit@gmail.com</span>
-                    </div>
-                </a>
-                
-                <a href="https://github.com/ardecode" target="_blank" class="contact-card-link">
-                    <div class="contact-card">
-                        <span class="contact-icon">💻</span>
-                        <h3>GitHub</h3>
-                        <span class="contact-text">@ardecode</span>
-                    </div>
-                </a>
-                
-                <a href="https://linkedin.com/in/arijitdesai" target="_blank" class="contact-card-link">
-                    <div class="contact-card">
-                        <span class="contact-icon">🔗</span>
-                        <h3>LinkedIn</h3>
-                        <span class="contact-text">Arijit Desai</span>
-                    </div>
-                </a>
-    
-                <a href="https://twitter.com/ardecode" target="_blank" class="contact-card-link">
-                    <div class="contact-card">
-                        <span class="contact-icon">✖️</span>
-                        <h3>X</h3>
-                        <span class="contact-text">@ardecode</span>
-                    </div>
-                </a>
+            <div class="contact-line">
+                <div><span class="label">Email</span><a href="mailto:desaiarijit@gmail.com">desaiarijit@gmail.com</a></div>
+                <div><span class="label">GitHub</span><a href="https://github.com/ardecode" target="_blank" rel="noopener">@ardecode</a></div>
+                <div><span class="label">LinkedIn</span><a href="https://linkedin.com/in/arijitdesai" target="_blank" rel="noopener">in/arijitdesai</a></div>
+                <div><span class="label">X</span><a href="https://twitter.com/ardecode" target="_blank" rel="noopener">@ardecode</a></div>
             </div>
         </div>
     </section>
+
+    <footer>
+        <div class="container">
+            <span>&copy; {{ site.time | date: "%Y" }} Arijit Desai</span>
+            <span><a href="/blog/">Blog</a> &middot; <a href="/feed.xml">RSS</a> &middot; <a href="https://github.com/ardecode" target="_blank" rel="noopener">GitHub</a></span>
+        </div>
+    </footer>
+</body>
+</html>

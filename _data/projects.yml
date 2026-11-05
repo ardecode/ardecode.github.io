@@ -1,0 +1,96 @@
+# Projects shown on /projects.html, in display order.
+# featured: true shows it on the homepage (keep it to 3).
+# Each entry: title, summary, features (list), tags (list), links (list of label + url).
+
+- title: "MCP Server for NetBox"
+  featured: true
+  summary: "NetBox has all the datacenter data. This MCP server lets Claude query it, so you can ask about clusters, devices, interfaces or IPs in plain English instead of clicking through the UI."
+  features:
+    - "Exposes NetBox to Claude through the Model Context Protocol"
+    - "Covers clusters, devices, IPs, interfaces and config data"
+    - "Plain-English questions, answers from live NetBox data"
+  tags: [AI, LLM, Agents, MCP, NetBox]
+  links:
+    - label: GitHub
+      url: "https://github.com/ardecode/netbox-mcp-server"
+
+- title: "The India Brief"
+  featured: true
+  summary: "A daily podcast on Indian news that runs on its own. It scrapes Indian news sites, scores the stories, picks the top ones across politics, business, tech and sports, and turns them into a conversation with NotebookLM. Then it goes up on Spotify."
+  features:
+    - "Scrapers for several Indian news outlets"
+    - "Categorizes and scores articles to pick the day's top stories"
+    - "NotebookLM turns the stories into a conversational episode"
+    - "Publishing to Spotify is automated too"
+  tags: [Python, NotebookLM, Web Scraping, NLP, Spotify API]
+  links:
+    - label: Spotify
+      url: "https://open.spotify.com/show/1fQMe3YRzi6n8L8DQoiY0T"
+
+- title: "Sanchaari: Transparent AI Assistant"
+  summary: "Most assistants just give you an answer. Sanchaari also shows how it got there, step by step, so you can see how the LLM reasons through each request."
+  features:
+    - "Shows the LLM's reasoning for every task"
+    - "Calculations, Wikipedia search, world time, stock prices (Alpha Vantage), definitions, news and translation"
+    - "Calls Wikipedia, financial and news APIs live"
+  tags: [Python, LangChain, LLM]
+  links:
+    - label: Live Demo
+      url: "https://huggingface.co/spaces/arde0909/sanchaari"
+    - label: GitHub
+      url: "https://github.com/ardecode/sanchaari"
+
+- title: "Safar: Ride Sharing Platform"
+  summary: "A ride-sharing app that connects drivers with passengers."
+  features:
+    - "Live location tracking and maps"
+    - "In-app chat between rider and driver"
+    - "Rider-driver matching"
+    - "Ratings and reviews"
+  tags: [Next.js, PostgreSQL, Vercel]
+  links:
+    - label: Live Demo
+      url: "https://www.safarsaathi.com/"
+
+- title: "StockAverager: Portfolio Calculator"
+  summary: "If I buy more shares at this price, what's my new average? And what's my profit or loss if the price moves? This answers both, with live prices."
+  features:
+    - "Live prices from the Yahoo Finance API"
+    - "New average price from what you hold plus what you plan to buy"
+    - "Profit/loss scenarios for percentage moves in price"
+    - "Hosted on Vercel"
+  tags: [Next.js, React, Tailwind CSS, Yahoo Finance API, Vercel]
+  links:
+    - label: Live Demo
+      url: "https://stock-avg-calculator.vercel.app/"
+    - label: GitHub
+      url: "https://github.com/ardecode/stock_avg_calculator"
+
+- title: "AP Elections 2024 Analytics Dashboard"
+  featured: true
+  summary: "A Grafana dashboard on the 2024 Andhra Pradesh Assembly Elections, backed by PostgreSQL. Voting patterns, candidates and constituency results across every district of AP."
+  features:
+    - "EVM vs postal ballots across all 175 constituencies, by party and region"
+    - "Closest contests (top 10 margins), seat share by region and party performance"
+    - "Candidates: criminal records, declared assets (how many crorepatis), education and gender split by party"
+    - "Filters for district and constituency"
+  tags: [Grafana, PostgreSQL, SQL, Data Visualization, Election Analysis]
+  links:
+    - label: Live Demo
+      url: "https://antarjaalasanchaari.grafana.net/public-dashboards/13236b744de24f61b0241238bc2364d2"
+    - label: GitHub
+      url: "https://github.com/ardecode/Andhra-Pradesh-2024-Assembly-Elections"
+
+- title: "Nutanix Bible Chatbot"
+  summary: "Ask questions about Nutanix and get answers pulled from the Nutanix Bible. It's a RAG chatbot on Claude 3.5 Sonnet, hosted on Hugging Face Spaces."
+  features:
+    - "Retrieves the relevant passages before answering (RAG)"
+    - "Claude 3.5 Sonnet writes the answer"
+    - "Vector database for semantic search"
+    - "Hosted on Hugging Face Spaces"
+  tags: [Claude 3.5 Sonnet, RAG, Hugging Face, LangChain, Vector DB]
+  links:
+    - label: Live Demo
+      url: "https://huggingface.co/spaces/arde0909/nutanix_bible_chatbot"
+    - label: GitHub
+      url: "https://github.com/ardecode/Nutanix-Bible-Chatbot"
