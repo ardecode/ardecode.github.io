@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "I Tuned a Setting vLLM Was Overwriting. Four Bugs in Its CPU Backend"
+title: "My KMP_BLOCKTIME=0 Never Reached the Worker. Four Bugs in vLLM's CPU Backend"
 date: 2026-11-14
 categories: [LLM, Inference, vLLM]
 description: "Four bugs in vLLM's CPU backend: your OpenMP settings replaced in the worker, page cache counted as used memory, workers over-reserving a container's memory limit, and a NUMA fallback that's ignored. Two fixes are up as PRs."
