@@ -3,7 +3,7 @@ layout: post
 title: "My KMP_BLOCKTIME=0 Never Reached the Worker. Four Bugs in vLLM's CPU Backend"
 date: 2026-11-14
 categories: [LLM, Inference, vLLM]
-description: "Four bugs in vLLM's CPU backend: your OpenMP settings replaced in the worker, page cache counted as used memory, workers over-reserving a container's memory limit, and a NUMA fallback that's ignored. Two fixes are up as PRs."
+description: "Four bugs in vLLM's CPU backend: your OpenMP settings replaced in the worker, page cache counted as used memory, workers over-reserving a container's memory limit, and a NUMA fallback that's ignored. All three fixes are up as PRs."
 ---
 
 **`KMP_BLOCKTIME=0` in my config. `KMP_BLOCKTIME=1` in the worker.** The setting I tuned in my last two posts never reached the process that runs the model.
@@ -15,7 +15,7 @@ After the [Granite Rapids post]({% post_url 2026-11-04-vllm-cpu-inference-granit
 3. With more than one worker, each one reserves memory as if it had the container to itself.
 4. A NUMA fallback is picked at startup and then ignored.
 
-I reproduced 1 and 2 on small AWS instances and opened PRs for them. 3 and 4 have unit tests and a PR that's almost ready.
+I reproduced 1 and 2 on small AWS instances and opened PRs for them. 3 and 4 have unit tests and a PR of their own.
 
 ## 1. Your KMP_* settings don't reach the worker
 
@@ -116,7 +116,7 @@ The unit test records which node each step asks about. On v0.33.0 it gets `[0, 7
 
 Who hits this? Mostly s390x. My read: it hurts debugging more than sizing, since the errors point at a node with no memory.
 
-Bugs 3 and 4 are in the same file, so they're one PR. The tests need an x86 machine with AVX-512, which my Mac isn't. I'll open it once they've run there.
+Bugs 3 and 4 are in the same file, so they're one PR: [vllm-project/vllm#67747](https://github.com/vllm-project/vllm/pull/67747). On the current code its two bug tests fail with 115.2 GiB reserved under 64 GiB, and with `[0, 7]`. With the fix, they pass.
 
 ## Where it stands
 
@@ -124,8 +124,8 @@ Bugs 3 and 4 are in the same file, so they're one PR. The tests need an x86 mach
 |---|---|---|
 | 1. KMP_* replaced in the worker | Yes, v0.33.0 and nightly | [#67726](https://github.com/vllm-project/vllm/pull/67726), open |
 | 2. Page cache counted as used | Yes, v0.33.0 | [#67727](https://github.com/vllm-project/vllm/pull/67727), open |
-| 3. Workers over-reserve memory | Unit test | Not opened yet |
-| 4. NUMA fallback ignored | Unit test | Same PR as 3 |
+| 3. Workers over-reserve memory | Unit test | [#67747](https://github.com/vllm-project/vllm/pull/67747), open |
+| 4. NUMA fallback ignored | Unit test | [#67747](https://github.com/vllm-project/vllm/pull/67747), same PR as 3 |
 
 All the AWS runs together cost under a dollar.
 
