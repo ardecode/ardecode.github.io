@@ -65,3 +65,5 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - CLAUDE.md
+  - _bench/
+  - .claude/

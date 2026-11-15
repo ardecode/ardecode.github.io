@@ -30,6 +30,8 @@ Most improvements came from avoiding bad configurations. Reducing the prompt pro
 
 **The biggest takeaway:** CPU inference tuning isn't always about maximizing throughput. Sometimes, the real improvement is reducing tail latency while giving up about 5% throughput.
 
+> **Update, 14 Nov 2026:** The `KMP_BLOCKTIME=0` in this post never reached the process that runs the model. When vLLM binds threads to CPUs, which it did in every run here, v0.20.0 writes its own `KMP_BLOCKTIME=1`, `KMP_AFFINITY` and `OMP_NUM_THREADS` into the worker, whatever you export. So the "blocktime 0" in RUN-07, 09 and 10 was really 1 ms, the same as every other run, and section 4 compares a config with itself. The other findings don't depend on it. Details in [the follow-up post]({% post_url 2026-11-14-vllm-cpu-backend-bugs %}).
+
 ## Setup
 
 - Host: dual-socket Intel Xeon 6730P (Granite Rapids), 32 cores per socket, SMT on. Socket 0 is CPUs 0–31 with siblings 64–95. Socket 1 is CPUs 32–63 with siblings 96–127. AMX with BF16, AVX-512.
@@ -113,9 +115,13 @@ It shows up in most CPU tuning advice. So did it help? Here's RUN-02 vs RUN-07, 
 
 Throughput up 1%. Tail TTFT worse. I kept it in the final config because it makes sense in a CPU quota, but from one run each I can't say it did anything. That's noise until I repeat it.
 
+> **Update:** It was noise, but not for the reason I thought. vLLM replaced `KMP_BLOCKTIME=0` with `1` in the worker, so both runs used 1 ms, not 200 ms and 0 ms. This table is two runs of the same setting, and the 13% gap in P95 TTFT is run-to-run variation. Whether `KMP_BLOCKTIME=0` helps under a CPU quota is still untested.
+
 ## 5. Stay off core 0
 
 RUN-06 tried the textbook pinning, `KMP_AFFINITY` and `OMP_PROC_BIND`. The server hung during the warmup GEMM and never came up. My guess is the affinity masks fought with the cgroup CPU quota, but I didn't dig in.
+
+> **Update:** I don't remember if vLLM's binding was on for this run. If it was, as in RUN-02, vLLM replaced my `KMP_AFFINITY` with its own, and the worker got vLLM's affinity plus my `OMP_PROC_BIND`. If it was off, both of mine reached the worker. Either way, I still don't know what hung.
 
 So for RUN-08 I used vLLM's own knob instead: `VLLM_CPU_OMP_THREADS_BIND="0-30"`, 31 threads on physical cores 0–30 of socket 0. Looks like the cleanest choice.
 
@@ -159,7 +165,7 @@ The same arithmetic works for any model and quota.
 3. Pod memory: `weights + ~6 GiB runtime + KV cache` must fit in the limit.
 4. Batched tokens: the next power of two at or above ISL, so a prompt never gets sliced.
 5. `max-num-seqs`: your peak concurrency, no more.
-6. `OMP_NUM_THREADS`: the vCPU quota.
+6. `OMP_NUM_THREADS`: the vCPU quota. (Update: with vLLM's binding on, it sets the thread count from the bound CPUs and ignores this, which is why `auto` ran 31 threads. It only applies with `VLLM_CPU_OMP_THREADS_BIND=nobind`.)
 
 For this model at 2048/256:
 
@@ -196,6 +202,8 @@ resources:
 ```
 
 Plus a `nodeSelector` on `feature.node.kubernetes.io/cpu-cpuid.AMXBF16: "true"` so it only lands on AMX nodes.
+
+> **Update:** In v0.20.0 with binding on, `OMP_NUM_THREADS` and `KMP_BLOCKTIME` here have no effect on the worker. vLLM sets both itself. I've left them in so the config matches what was run.
 
 ## What I'd do next time
 

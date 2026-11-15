@@ -16,6 +16,8 @@ After the [last post]({% post_url 2026-11-04-vllm-cpu-inference-granite-rapids %
 
 **Do you need `always`? No.** The `madvise` setting, which was already the default on this Ubuntu image, gave the same result.
 
+> **Update, 14 Nov 2026:** The `KMP_BLOCKTIME=0` in this setup never reached the vLLM worker. With `auto` binding, v0.20.0 writes `KMP_BLOCKTIME=1` into the worker whatever you export. Every run here had the same value, so the hugepage comparison still holds. But the absolute numbers are for `KMP_BLOCKTIME=1`, not 0. Details in [the follow-up post]({% post_url 2026-11-14-vllm-cpu-backend-bugs %}).
+
 ## Why hugepages might matter
 
 Every memory access goes through a virtual-to-physical address translation. The CPU caches recent translations in the TLB. With normal 4 KiB pages, the TLB covers a few MB of memory. With 2 MiB hugepages it covers a few GB.
@@ -40,7 +42,8 @@ I don't have a Xeon to test on, so I rented one.
 - vLLM v0.20.0 CPU image in Docker, pinned to 32 vCPUs (cores 1–16 and their SMT siblings), core 0 left out.
 - vLLM's `auto` binding put 15 OpenMP threads on those cores, one per physical core, and reserved one. The last post's setup had 31.
 - Model: [Ministral-3-3B-Base-2512](https://huggingface.co/mistralai/Ministral-3-3B-Base-2512), bfloat16, 7.2 GB.
-- Same vLLM config as RUN-10 in the last post: `VLLM_CPU_KVCACHE_SPACE=35`, `--max-num-seqs=128`, `--max-num-batched-tokens=2048`, `KMP_BLOCKTIME=0`, prefix caching on. Plus `THP_MEM_ALLOC_ENABLE=1`, which tells PyTorch's CPU allocator to ask for hugepages on large allocations.- Load: [AIPerf](https://github.com/ai-dynamo/aiperf) 0.13.0 pinned to the other 15 cores. 32 concurrent users, exactly 2,048 tokens in and 256 out, 32 warmup requests, then 320 measured.
+- Same vLLM config as RUN-10 in the last post: `VLLM_CPU_KVCACHE_SPACE=35`, `--max-num-seqs=128`, `--max-num-batched-tokens=2048`, `KMP_BLOCKTIME=0`, prefix caching on. Plus `THP_MEM_ALLOC_ENABLE=1`, which tells PyTorch's CPU allocator to ask for hugepages on large allocations. (Update: the worker actually ran `KMP_BLOCKTIME=1`. See the note at the top.)
+- Load: [AIPerf](https://github.com/ai-dynamo/aiperf) 0.13.0 pinned to the other 15 cores. 32 concurrent users, exactly 2,048 tokens in and 256 out, 32 warmup requests, then 320 measured.
 
 So do vLLM and AIPerf share cores? No. Here's the split. On this VM, CPU N and CPU N+32 are SMT siblings on the same physical core.
 
